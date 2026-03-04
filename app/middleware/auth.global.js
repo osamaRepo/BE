@@ -8,6 +8,11 @@ export default defineNuxtRouteMiddleware((to, from) => {
     return
   }
 
+  // Initialize auth store from localStorage if not already initialized
+  if (!authStore.isAuthenticated && process.client) {
+    authStore.init()
+  }
+
   // Redirect to login if not authenticated
   if (!authStore.isAuthenticated) {
     return navigateTo('/login')
