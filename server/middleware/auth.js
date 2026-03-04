@@ -4,6 +4,12 @@ import { errorResponse } from '../utils/response'
 export default defineEventHandler(async (event) => {
   const path = event.path
 
+  // Only protect API routes (not pages, assets, etc.)
+  if (!path.startsWith('/api/')) {
+    return
+  }
+
+  // Public API endpoints
   const publicPaths = ['/api/auth/login']
   
   if (publicPaths.some(p => path.startsWith(p))) {
